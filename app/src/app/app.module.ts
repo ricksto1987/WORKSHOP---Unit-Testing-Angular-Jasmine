@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -18,6 +20,8 @@ import { BankAccountService } from './bank-account/bank-account.service';
   ],
   imports: [
     BrowserModule,
+    NgbModule,
+    NgbAlertModule,
     ReactiveFormsModule
   ],
   providers: [AuthenticateService, BankAccountService],

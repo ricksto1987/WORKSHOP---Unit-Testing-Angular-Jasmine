@@ -2,11 +2,11 @@
 <div id="options-toolbar-{{i}}">
     <input type="number" id="input-amount" #inputAmount/>
     <div id="buttons-{{i}}">
-        <button id="button-withdraw-{{i}}" [disabled]="!canWithdraw" (click)="Withdraw(parseFloatValue(inputAmount.value))">Withdraw</button>&nbsp;
-        <button id="button-deposit-{{i}}" [disabled]="!canDeposit" (click)="Deposit(parseFloatValue(inputAmount.value))">Deposit</button>&nbsp;
-        <button id="button-transfer-{{i}}" [disabled]="!canTransfer" (click)="Transfer(parseFloatValue(inputAmount.value))">Transfer</button>
+        <button id="button-withdraw-{{i}}" class="btn btn-secondary" [disabled]="!canWithdraw" (click)="Withdraw(parseFloatValue(inputAmount.value))">Withdraw</button>&nbsp;
+        <button id="button-deposit-{{i}}" class="btn btn-secondary" [disabled]="!canDeposit" (click)="Deposit(parseFloatValue(inputAmount.value))">Deposit</button>&nbsp;
+        <button id="button-transfer-{{i}}" class="btn btn-secondary" [disabled]="!canTransfer" (click)="Transfer(parseFloatValue(inputAmount.value))">Transfer</button>
         <div>
-            <select (change)="SetSelectedAccountNumber($event.target.value)">
+            <select class="btn btn-secondary btn-sm dropdown-toggle" (change)="SetSelectedAccountNumber($event.target.value)">
                 <option *ngFor="let account of allAccounts" [value]="accountNumber">{{account.AccountName}}</option>
             </select>
         </div>

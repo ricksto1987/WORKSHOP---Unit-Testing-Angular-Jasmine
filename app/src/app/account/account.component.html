@@ -1,0 +1,14 @@
+<div id="current-funds">{{accountName}}&#58;&nbsp;{{currentFunds | currency: 'GBP'}}</div>
+<div id="options-toolbar-{{i}}">
+    <input type="number" id="input-amount" #inputAmount/>
+    <div id="buttons-{{i}}">
+        <button id="button-withdraw-{{i}}" [disabled]="!canWithdraw" (click)="Withdraw(parseFloatValue(inputAmount.value))">Withdraw</button>&nbsp;
+        <button id="button-deposit-{{i}}" [disabled]="!canDeposit" (click)="Deposit(parseFloatValue(inputAmount.value))">Deposit</button>&nbsp;
+        <button id="button-transfer-{{i}}" [disabled]="!canTransfer" (click)="Transfer(parseFloatValue(inputAmount.value))">Transfer</button>
+        <div>
+            <select (change)="SetSelectedAccountNumber($event.target.value)">
+                <option *ngFor="let account of allAccounts" [value]="accountNumber">{{account.AccountName}}</option>
+            </select>
+        </div>
+    </div>
+</div>

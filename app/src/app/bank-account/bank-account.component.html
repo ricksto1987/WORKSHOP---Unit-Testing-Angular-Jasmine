@@ -1,0 +1,20 @@
+<div>
+    <div *ngIf="userToken === null">
+    Please login:
+    <div>
+        Username:&nbsp;<input id="input-username" #inputUsername value="mbag1"/>
+        &nbsp;Password:&nbsp;<input id="input-password" #inputPassword type="password" value="secureone!1!" />
+        &nbsp;<button id="button-login" (click)="Authenticate()">Login</button>
+    </div>
+</div>
+<div *ngIf="userToken !== null && accounts.length > 0">
+    <h1>Welcome to your current account</h1>
+    <h2>You may withdraw:</h2>
+        <div *ngFor="let account of accounts; let i = index" id="withdraw-{{i}}">
+            <app-account [accountNumber]="account.AccountNumber"
+                        [accountName]="account.AccountName" 
+                        [currentFunds]="account.CurrentFunds"
+                        (hostRefresh)="hostRefresh()"></app-account>
+        </div>
+    </div>
+</div>

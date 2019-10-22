@@ -62,6 +62,11 @@ export class AccountComponent implements OnInit {
   }
 
   public Withdraw(amount: number): void {
+
+    if (amount < 0.0) {
+      return;
+    }
+
     this.SufficientFunds(amount).subscribe((available: boolean) => {
       if (available) {
         this.bankAccountService.Withdraw(this.accountNumber, amount).subscribe(
@@ -75,6 +80,11 @@ export class AccountComponent implements OnInit {
   }
 
   public Deposit(amount: number): void {
+
+    if (amount < 0.0) {
+      return;
+    }
+
     this.bankAccountService.Deposit(this.accountNumber, amount).subscribe(
       (currentFunds) => {
         this.currentFunds = currentFunds;
@@ -84,6 +94,11 @@ export class AccountComponent implements OnInit {
   }
 
   public Transfer(amount: number): void {
+
+    if (amount < 0.0) {
+      return;
+    }
+
     this.SufficientFunds(amount).subscribe((available: boolean) => {
       if (available) {
         const sourceAccountNumber = this.accountNumber;

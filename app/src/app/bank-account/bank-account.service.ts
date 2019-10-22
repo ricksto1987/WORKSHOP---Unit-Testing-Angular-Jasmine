@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { AccountData } from '../data/account-data';
 import { Account } from '../data/account';
 
@@ -24,36 +24,63 @@ export class BankAccountService {
     }
 
     public Withdraw(accountNumber: string, amount: number): Observable<number> {
+
+        if (amount < 0.0) {
+            return throwError(new Error('negative value'));
+        }
+
         const account: Account = this.LocateBankAccount(accountNumber);
         if (account !== null) {
             account.CurrentFunds -= amount;
             return of(account.CurrentFunds);
         }
+        return throwError(new Error('error: could not process request'));
     }
 
     public FundsAvailable(accountNumber: string, amount: number): Observable<boolean> {
+
+        if (amount < 0.0) {
+            return throwError(new Error('negative value'));
+        }
+
         const account: Account = this.LocateBankAccount(accountNumber);
         if (account !== null) {
             const available: boolean = (account.CurrentFunds - amount) > -1.0;
             return of(available === true);
         }
+
+        return throwError(new Error('error: could not process request'));
     }
 
     public Deposit(accountNumber: string, amount: number): Observable<number> {
+
+        if (amount < 0.0) {
+            return throwError(new Error('negative value'));
+        }
+
         const account: Account = this.LocateBankAccount(accountNumber);
         if (account !== null) {
             account.CurrentFunds += amount;
             return of(account.CurrentFunds);
         }
+
+        return throwError(new Error('error: could not process request'));
     }
 
     public Transfer(sourceAccountNumber: string, destinationAccountNumber: string, amount: number) {
+
+        if (amount < 0.0) {
+            return throwError(new Error('negative value'));
+        }
+
         const bankSourceAccount = this.LocateBankAccount(sourceAccountNumber);
         const bankDestinationAccount = this.LocateBankAccount(destinationAccountNumber);
 
         if (bankSourceAccount !== null && bankDestinationAccount !== null) {
             bankSourceAccount.CurrentFunds -= amount;
             bankDestinationAccount.CurrentFunds += amount;
+        } else {
+            return throwError(new Error('error: could not process request'));
         }
     }
 
@@ -68,6 +95,10 @@ export class BankAccountService {
             if (account.AccountNumber === 'acc-2') {
                 accountData.push(this.bankAccounts.Accounts[1]);
             }
+        }
+
+        if (accountData.length === 0) {
+            return throwError(new Error('error: could not locate accounts'));
         }
 
         return of(accountData);
@@ -87,6 +118,11 @@ export class BankAccountService {
         this.bankAccounts.Accounts.forEach((account: Account) => {
             results.push(account);
         });
+
+        if (results.length === 0) {
+            return throwError(new Error('error: could not locate accounts'));
+        }
+
         return of(results);
     }
 }
